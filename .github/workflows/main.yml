@@ -1,0 +1,15 @@
+name: All in one file for testing artifacts knowledge, O/P knowledge and about caching
+on: workflow_dispatch
+
+jobs:
+  checking-out-code-and-installing-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+      - name: installing deps
+        run: npm ci
+      - name: running tests
+        run : npm run tests
+      - name: building app
+        run: npm run build
