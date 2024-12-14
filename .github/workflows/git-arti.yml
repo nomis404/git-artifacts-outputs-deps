@@ -33,7 +33,7 @@ jobs:
         run: npm run build
       
       - name: Artifact Build with actions
-        uses: actions/checkout@v3
+        uses: actions/upload-artifact@v3
         with:
           name: arti-name
           path: |
