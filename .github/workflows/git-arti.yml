@@ -1,5 +1,5 @@
 name: All in one file for testing artifacts knowledge, O/P knowledge and about caching
-on: workflow-dispatch
+on: workflow_dispatch
 
 jobs:
   checking out code and installing deps:
