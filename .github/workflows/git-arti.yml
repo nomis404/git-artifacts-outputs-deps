@@ -1,15 +1,44 @@
-name: All in one file for testing artifacts knowledge, O/P knowledge and about caching
+name: All in one file to demo artifacts, O/P and deps
 on: workflow_dispatch
 
 jobs:
-  checking-out-code-and-installing-deps:
+  caching-demo:
     runs-on: ubuntu-latest
     steps:
-      - name: git checkout git
+      - name: Checking out code
         uses: actions/checkout@v3
-      - name: installing deps
+
+      - name: Caching deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-deps-key-${{hashFiles('/**package-lock.json')}}
+
+      - name: Installing deps
         run: npm ci
+
+  artifacts-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out code
+        uses: actions/checkout@v3
+
+      - name: Installing deps
+        run: npm ci
+      
       - name: running tests
-        run : npm run test
-      - name: building app
+        run: npm run test
+      
+      - name: Building app
         run: npm run build
+      
+      - name: Artifact Build with actions
+        uses: actions/checkout@v3
+        with:
+          name: arti-name
+          path: |
+            dist
+            index.html
+
+      - name: Deploying
+        run : echo "Deploying ....."
