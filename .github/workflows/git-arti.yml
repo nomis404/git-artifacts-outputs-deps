@@ -12,7 +12,7 @@ jobs:
       run: npm ci
 
     - name: running tests
-      run : npm tests
+      run : npm run tests
 
     - name: building app
-      run: npm build
+      run: npm run build
