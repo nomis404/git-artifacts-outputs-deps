@@ -19,6 +19,7 @@ jobs:
 
   artifacts-demo:
     runs-on: ubuntu-latest
+    needs: caching-demo
     outputs:
       script-file: ${{steps.publish.outputs.name}}
     steps:
