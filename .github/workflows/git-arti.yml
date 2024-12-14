@@ -19,6 +19,8 @@ jobs:
 
   artifacts-demo:
     runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{steps.publish.outputs.name}}
     steps:
       - name: Checking out code
         uses: actions/checkout@v3
@@ -31,6 +33,11 @@ jobs:
       
       - name: Building app
         run: npm run build
+
+      - name: getting filename
+        id: publish
+        run: |
+          find dist/assets/*json -type f -execdir echo 'name={}' >> $GITHUB_OUTPUT ';'
       
       - name: Artifact Build with actions
         uses: actions/upload-artifact@v3
@@ -40,5 +47,32 @@ jobs:
             dist
             index.html
 
+      - name: Deploying
+        run: echo "Deploying ....."
+
+  output-demo:
+    runs-on: ubuntu-latest
+    needs: artifacts-demo
+    steps:
+      - name: Checking out code
+        uses: actions/checkout@v3
+      
+      - name: Installing deps
+        run: npm ci
+            
+      - name: running tests
+        run: npm run test
+            
+      - name: Building app
+        run: npm run build
+            
+      - name: Artifact Build with actions
+        uses: actions/download-artifact@v3
+        with:
+          name: arti-name
+
+      - name: Printing file name
+        run: echo '${{needs.artifacts-demo.outputs.script-file}}'
+      
       - name: Deploying
         run : echo "Deploying ....."
