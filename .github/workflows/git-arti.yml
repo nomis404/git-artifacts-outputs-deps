@@ -38,7 +38,7 @@ jobs:
       - name: getting filename
         id: publish
         run: |
-          find dist/assets/*json -type f -execdir echo 'name={}' >> $GITHUB_OUTPUT ';'
+          find dist/assets/*js -type f -execdir echo 'name={}' >> $GITHUB_OUTPUT ';'
       
       - name: Artifact Build with actions
         uses: actions/upload-artifact@v3
